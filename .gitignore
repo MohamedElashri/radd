@@ -1,0 +1,5 @@
+/target/
+
+# Phase planning and local agent notes are intentionally private.
+plan*
+!src/planner.rs

@@ -1,0 +1,23 @@
+[package]
+name = "radd"
+version = "0.1.0"
+edition = "2024"
+description = "A safe Rust frontend for orchestrating ROOT hadd merges."
+license = "MIT OR Apache-2.0"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = "warn"
+pedantic = "warn"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+which = "6"
+
+[dev-dependencies]
+assert_cmd = "2"
+assert_fs = "1"
+predicates = "3"

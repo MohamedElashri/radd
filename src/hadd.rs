@@ -1,0 +1,1 @@
+//! `hadd` subprocess integration skeleton.
