@@ -1,0 +1,9 @@
+{{- define "index" -}}{{ template "base" . }}{{- end }}
+{{- define "content" -}}
+<article class="doc-page home-page">
+  <p class="section-label">Documentation</p>
+  <h1>{{ .Section.Title }}</h1>
+  {{ if .Section.Description }}<p class="lead">{{ .Section.Description }}</p>{{ end }}
+  <div class="prose">{{ safeHTML .Section.BodyHTML }}</div>
+</article>
+{{- end }}

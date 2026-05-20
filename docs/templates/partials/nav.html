@@ -1,0 +1,25 @@
+{{- define "docs-nav" -}}
+<div class="side-nav-group">
+  <strong>Guide</strong>
+  <a href="{{ .BasePath }}/guide/getting-started/">Getting Started</a>
+  <a href="{{ .BasePath }}/guide/manifests-and-inputs/">Manifests and Inputs</a>
+  <a href="{{ .BasePath }}/guide/merge-planning/">Planning and Merging</a>
+  <a href="{{ .BasePath }}/guide/scratch-cache-and-staging/">Scratch, Cache, and Staging</a>
+  <a href="{{ .BasePath }}/guide/validation-inspection-and-benchmarking/">Validation, Inspection, and Benchmarking</a>
+</div>
+<div class="side-nav-group">
+  <strong>Reference</strong>
+  <a href="{{ .BasePath }}/reference/cli/">CLI Reference</a>
+  <a href="{{ .BasePath }}/reference/artifacts/">Artifacts</a>
+  <a href="{{ .BasePath }}/reference/cache/">Cache Reference</a>
+  <a href="{{ .BasePath }}/reference/safety/">Safety Semantics</a>
+</div>
+<div class="side-nav-group">
+  <strong>Developer</strong>
+  <a href="{{ .BasePath }}/developer/architecture/">Architecture</a>
+  <a href="{{ .BasePath }}/developer/merge-planner-and-executor/">Planner and Executor</a>
+  <a href="{{ .BasePath }}/developer/audit-artifacts/">Audit Artifacts</a>
+  <a href="{{ .BasePath }}/developer/testing-and-release/">Testing and Release</a>
+  <a href="{{ .BasePath }}/developer/contributing/">Contributing</a>
+</div>
+{{- end }}

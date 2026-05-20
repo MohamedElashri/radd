@@ -1,3 +1,4 @@
+mod bench;
 mod cache;
 mod cli;
 mod config;

@@ -1,0 +1,24 @@
+{{- define "section" -}}{{ template "base" . }}{{- end }}
+{{- define "content" -}}
+<div class="docs-layout">
+  <aside class="side-nav" aria-label="Documentation navigation">
+    {{ template "docs-nav" . }}
+  </aside>
+  <article class="doc-page">
+    <p class="section-label">Section</p>
+    <h1>{{ .Section.Title }}</h1>
+    {{ if .Section.Description }}<p class="lead">{{ .Section.Description }}</p>{{ end }}
+    <div class="prose">{{ safeHTML .Section.BodyHTML }}</div>
+    {{ if .Pages }}
+    <div class="section-list">
+      {{ range .Pages }}
+      <a class="section-card" href="{{ $.BasePath }}{{ .URL }}">
+        <strong>{{ .Title }}</strong>
+        {{ if .Description }}<span>{{ .Description }}</span>{{ end }}
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </article>
+</div>
+{{- end }}
