@@ -21,6 +21,7 @@ help:
 	@printf '%s\n' '  make lint         Run clippy with warnings as errors'
 	@printf '%s\n' '  make clippy       Run clippy with warnings as errors'
 	@printf '%s\n' '  make test         Run the full test suite'
+	@printf '%s\n' '  make root-test    Run opt-in tests with real root and hadd'
 	@printf '%s\n' '  make build        Build debug binary'
 	@printf '%s\n' '  make release      Build release binary'
 	@printf '%s\n' ''
@@ -55,6 +56,10 @@ lint: clippy
 .PHONY: test
 test:
 	$(CARGO) test
+
+.PHONY: root-test
+root-test:
+	RADD_REAL_ROOT_TESTS=1 $(CARGO) test --test real_root -- --nocapture
 
 .PHONY: build
 build:

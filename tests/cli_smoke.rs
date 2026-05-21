@@ -1162,6 +1162,41 @@ fn bench_supports_object_selection_and_json_output() {
 
 #[cfg(unix)]
 #[test]
+fn bench_json_suppresses_successful_hadd_stdout() {
+    let temp = TempDir::new().expect("temp dir");
+    write_fake_hadd(temp.path());
+    fs::write(temp.path().join("a.root"), b"aaaa").expect("write a");
+    let scratch = temp.path().join("bench-scratch");
+
+    let mut command = Command::cargo_bin("radd").expect("binary exists");
+    command
+        .current_dir(temp.path())
+        .env("PATH", prepend_to_path(temp.path()))
+        .env("RADD_FAKE_HADD_STDOUT", "fake hadd noisy stdout");
+
+    let stdout = command
+        .args([
+            "bench",
+            "a.root",
+            "--jobs-candidates",
+            "1",
+            "--scratch",
+            scratch.to_str().expect("utf-8 scratch"),
+            "--json",
+        ])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("fake hadd noisy stdout").not())
+        .get_output()
+        .stdout
+        .clone();
+
+    let report: serde_json::Value = serde_json::from_slice(&stdout).expect("benchmark json");
+    assert_eq!(report["input_file_count"], 1);
+}
+
+#[cfg(unix)]
+#[test]
 fn bench_can_keep_benchmark_files() {
     let temp = TempDir::new().expect("temp dir");
     write_fake_hadd(temp.path());
@@ -1425,6 +1460,10 @@ fi
 
 if [ -n "$RADD_FAKE_HADD_SLEEP_SECONDS" ]; then
   sleep "$RADD_FAKE_HADD_SLEEP_SECONDS"
+fi
+
+if [ -n "$RADD_FAKE_HADD_STDOUT" ]; then
+  printf '%s\n' "$RADD_FAKE_HADD_STDOUT"
 fi
 
 if [ -n "$output" ]; then

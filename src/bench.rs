@@ -238,6 +238,12 @@ fn run_candidate(
     run_scratch: &std::path::Path,
 ) -> Result<BenchmarkCandidate> {
     let candidate_scratch = run_scratch.join(format!("jobs-{jobs}"));
+    fs::create_dir_all(&candidate_scratch).with_context(|| {
+        format!(
+            "could not create benchmark candidate directory: {}",
+            candidate_scratch.display()
+        )
+    })?;
     let mut plan = planner::build_merge_plan(
         sample,
         planner::PlanOptions {

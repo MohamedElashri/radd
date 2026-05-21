@@ -25,6 +25,7 @@ Useful local targets include:
 
 ```bash
 make test
+make root-test
 make docs
 make docs-serve
 make release
@@ -39,6 +40,32 @@ The suite has two layers:
 - integration tests in `tests/cli_smoke.rs` for CLI behavior
 
 The integration suite uses fake `hadd` and fake `root` commands. CI does not require ROOT.
+
+## Real ROOT Integration Tests
+
+Run the live ROOT suite when you want end-to-end coverage against real ROOT files:
+
+```bash
+make root-test
+```
+
+This sets `RADD_REAL_ROOT_TESTS=1` and runs `tests/real_root.rs`. The tests require
+both `root` and `hadd` on `PATH`. They generate small ROOT files in a temporary
+directory, inspect them through ROOT-backed metadata, merge them through the real
+`hadd`, validate the merged output, and run `radd bench` against the generated
+fixtures.
+
+The generated files contain a real `Events` `TTree` and `Counts` histogram, so the
+suite verifies more than file existence. A ROOT macro reopens the merged output
+and checks the expected tree and histogram entries.
+
+The live suite is intentionally opt-in. Normal `cargo test` remains fast and does
+not require a ROOT installation, while release candidates can be checked with:
+
+```bash
+cargo test
+make root-test
+```
 
 ## Fake hadd
 

@@ -74,3 +74,16 @@ radd bench @inputs.txt --keep-bench-files
 ```
 
 Benchmark results are approximate. Machine load and filesystem behavior matter.
+
+## Testing With Real ROOT Files
+
+Developers can run the opt-in live suite before release or performance work:
+
+```bash
+make root-test
+```
+
+It requires `root` and `hadd` on `PATH`. The suite creates temporary ROOT files,
+runs `radd inspect --root-metadata`, performs a real `hadd` merge through
+`radd merge`, checks the merged `Events` tree with ROOT, and exercises
+`radd bench` with JSON output.

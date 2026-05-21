@@ -188,21 +188,40 @@ fn run_job(job: &ExecutableJob) -> Result<()> {
         );
     };
 
-    let status = Command::new(executable)
+    let output = Command::new(executable)
         .args(&argv[1..])
         .stdin(Stdio::null())
-        .status()
+        .output()
         .with_context(|| format!("could not start hadd executable `{executable}`"))?;
 
-    if !status.success() {
-        let code = status.code().map_or_else(
+    if !output.status.success() {
+        let code = output.status.code().map_or_else(
             || "terminated by signal".to_string(),
             |code| code.to_string(),
         );
-        bail!("process exited with status {code}");
+        let diagnostics = command_diagnostics(&output.stdout, &output.stderr);
+        if diagnostics.is_empty() {
+            bail!("process exited with status {code}");
+        }
+        bail!("process exited with status {code}: {diagnostics}");
     }
 
     Ok(())
+}
+
+fn command_diagnostics(stdout: &[u8], stderr: &[u8]) -> String {
+    let mut diagnostics = String::new();
+    let stdout = String::from_utf8_lossy(stdout);
+    let stderr = String::from_utf8_lossy(stderr);
+
+    for line in stderr.lines().chain(stdout.lines()).map(str::trim) {
+        if !line.is_empty() {
+            diagnostics.push_str(line);
+            break;
+        }
+    }
+
+    diagnostics
 }
 
 fn ensure_stage_outputs_exist(stage: &[ExecutableJob]) -> Result<()> {

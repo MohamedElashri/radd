@@ -95,6 +95,13 @@ make docs
 make check
 ```
 
+The default test suite keeps ROOT optional by using fake `hadd` and `root`
+commands. To exercise real generated ROOT files and benchmark mode locally, run:
+
+```bash
+make root-test
+```
+
 ## Quick Start
 
 Merge direct inputs:
