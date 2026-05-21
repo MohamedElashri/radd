@@ -18,6 +18,7 @@ help:
 	@printf '%s\n' '  make check        Run fmt-check, clippy, test, and docs-check'
 	@printf '%s\n' '  make fmt          Format Rust code'
 	@printf '%s\n' '  make fmt-check    Check Rust formatting'
+	@printf '%s\n' '  make lint         Run clippy with warnings as errors'
 	@printf '%s\n' '  make clippy       Run clippy with warnings as errors'
 	@printf '%s\n' '  make test         Run the full test suite'
 	@printf '%s\n' '  make build        Build debug binary'
@@ -47,6 +48,9 @@ fmt-check:
 .PHONY: clippy
 clippy:
 	$(CARGO) clippy --all-targets --all-features -- -D warnings
+
+.PHONY: lint
+lint: clippy
 
 .PHONY: test
 test:

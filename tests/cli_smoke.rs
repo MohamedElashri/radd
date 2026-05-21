@@ -1507,6 +1507,5 @@ fn cache_file_count(directory: &Path) -> usize {
 #[cfg(unix)]
 fn directory_entry_count(directory: &Path) -> usize {
     fs::read_dir(directory)
-        .map(|entries| entries.filter_map(Result::ok).count())
-        .unwrap_or(0)
+        .map_or(0, |entries| entries.filter_map(Result::ok).count())
 }
