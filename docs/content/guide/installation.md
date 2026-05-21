@@ -25,6 +25,10 @@ curl -fsSL https://melashri.net/radd/install.sh | \
   RADD_VERSION=v0.1.0 RADD_INSTALL_DIR=/usr/local/bin sh
 ```
 
+The installer prints timestamped setup steps, checks for ROOT tools, and runs
+`radd doctor` after installing. Use `RADD_HADD=/path/to/hadd` when ROOT's
+`hadd` is not on `PATH`, and `RADD_COLOR=never` to disable colored output.
+
 If you are installing from a fork or mirror, set `RADD_REPO`:
 
 ```bash
