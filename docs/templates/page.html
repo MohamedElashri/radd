@@ -4,10 +4,10 @@
   <aside class="side-nav" aria-label="Documentation navigation">
     {{ template "docs-nav" . }}
   </aside>
-  <article class="doc-page">
+  <article class="article-shell">
     <p class="section-label">{{ default .Section.Title "Docs" }}</p>
     <h1>{{ .Page.Title }}</h1>
-    {{ if .Page.Description }}<p class="lead">{{ .Page.Description }}</p>{{ end }}
+    {{ if .Page.Description }}<p class="lede">{{ .Page.Description }}</p>{{ end }}
     <div class="prose">{{ safeHTML .Page.BodyHTML }}</div>
   </article>
 </div>

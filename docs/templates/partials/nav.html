@@ -1,25 +1,24 @@
 {{- define "docs-nav" -}}
-<div class="side-nav-group">
-  <strong>Guide</strong>
-  <a href="{{ .BasePath }}/guide/getting-started/">Getting Started</a>
-  <a href="{{ .BasePath }}/guide/manifests-and-inputs/">Manifests and Inputs</a>
-  <a href="{{ .BasePath }}/guide/merge-planning/">Planning and Merging</a>
-  <a href="{{ .BasePath }}/guide/scratch-cache-and-staging/">Scratch, Cache, and Staging</a>
-  <a href="{{ .BasePath }}/guide/validation-inspection-and-benchmarking/">Validation, Inspection, and Benchmarking</a>
-</div>
-<div class="side-nav-group">
-  <strong>Reference</strong>
-  <a href="{{ .BasePath }}/reference/cli/">CLI Reference</a>
-  <a href="{{ .BasePath }}/reference/artifacts/">Artifacts</a>
-  <a href="{{ .BasePath }}/reference/cache/">Cache Reference</a>
-  <a href="{{ .BasePath }}/reference/safety/">Safety Semantics</a>
-</div>
-<div class="side-nav-group">
-  <strong>Developer</strong>
-  <a href="{{ .BasePath }}/developer/architecture/">Architecture</a>
-  <a href="{{ .BasePath }}/developer/merge-planner-and-executor/">Planner and Executor</a>
-  <a href="{{ .BasePath }}/developer/audit-artifacts/">Audit Artifacts</a>
-  <a href="{{ .BasePath }}/developer/testing-and-release/">Testing and Release</a>
-  <a href="{{ .BasePath }}/developer/contributing/">Contributing</a>
-</div>
+<details class="side-nav-details" open>
+<summary>Docs menu</summary>
+<nav>
+  <p>Guide</p>
+  <a{{ if eq .CurrentURL "/guide/getting-started/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/getting-started/">Getting Started</a>
+  <a{{ if eq .CurrentURL "/guide/manifests-and-inputs/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/manifests-and-inputs/">Manifests and Inputs</a>
+  <a{{ if eq .CurrentURL "/guide/merge-planning/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/merge-planning/">Planning and Merging</a>
+  <a{{ if eq .CurrentURL "/guide/scratch-cache-and-staging/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/scratch-cache-and-staging/">Scratch, Cache, and Staging</a>
+  <a{{ if eq .CurrentURL "/guide/validation-inspection-and-benchmarking/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/validation-inspection-and-benchmarking/">Validation, Inspection, and Benchmarking</a>
+  <p>Reference</p>
+  <a{{ if eq .CurrentURL "/reference/cli/" }} class="active"{{ end }} href="{{ .BasePath }}/reference/cli/">CLI Reference</a>
+  <a{{ if eq .CurrentURL "/reference/artifacts/" }} class="active"{{ end }} href="{{ .BasePath }}/reference/artifacts/">Artifacts</a>
+  <a{{ if eq .CurrentURL "/reference/cache/" }} class="active"{{ end }} href="{{ .BasePath }}/reference/cache/">Cache Reference</a>
+  <a{{ if eq .CurrentURL "/reference/safety/" }} class="active"{{ end }} href="{{ .BasePath }}/reference/safety/">Safety Semantics</a>
+  <p>Developer</p>
+  <a{{ if eq .CurrentURL "/developer/architecture/" }} class="active"{{ end }} href="{{ .BasePath }}/developer/architecture/">Architecture</a>
+  <a{{ if eq .CurrentURL "/developer/merge-planner-and-executor/" }} class="active"{{ end }} href="{{ .BasePath }}/developer/merge-planner-and-executor/">Planner and Executor</a>
+  <a{{ if eq .CurrentURL "/developer/audit-artifacts/" }} class="active"{{ end }} href="{{ .BasePath }}/developer/audit-artifacts/">Audit Artifacts</a>
+  <a{{ if eq .CurrentURL "/developer/testing-and-release/" }} class="active"{{ end }} href="{{ .BasePath }}/developer/testing-and-release/">Testing and Release</a>
+  <a{{ if eq .CurrentURL "/developer/contributing/" }} class="active"{{ end }} href="{{ .BasePath }}/developer/contributing/">Contributing</a>
+</nav>
+</details>
 {{- end }}

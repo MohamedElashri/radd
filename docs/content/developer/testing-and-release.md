@@ -89,6 +89,21 @@ The fake `root` command prints marker-delimited JSON for metadata-inspection tes
 
 GitHub Actions CI runs formatting, clippy, and tests on Linux with the pinned repo toolchain from `rust-toolchain.toml`. The release workflow uses the same toolchain and builds the Linux and macOS release artifacts.
 
+## Docs Website Deployment
+
+The docs site is built by `.github/workflows/pages.yml`, following the same
+shape as Nida's own Pages workflow:
+
+- check out the repository
+- install Go
+- install the Nida CLI with `go install github.com/MohamedElashri/nida/cmd/nida@latest`
+- run `nida build --site ./docs`
+- upload `docs/public` as a GitHub Pages artifact
+- deploy that artifact with the GitHub Pages deploy action
+
+The workflow runs on pushes to `main` that touch `docs/**`, `README.md`, or the
+Pages workflow itself. It can also be run manually from the GitHub Actions UI.
+
 ## Release Workflow
 
 The release workflow runs when a tag matching `v*` is pushed. It performs the release checks, builds optimized Linux and macOS binaries for amd64 and arm64, smoke-tests the version commands, packages archives with a short bundled README, writes SHA-256 checksum files, uploads the packages as workflow artifacts, and publishes them to the GitHub release for the tag.

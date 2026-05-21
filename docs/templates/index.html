@@ -1,9 +1,52 @@
 {{- define "index" -}}{{ template "base" . }}{{- end }}
 {{- define "content" -}}
-<article class="doc-page home-page">
-  <p class="section-label">Documentation</p>
-  <h1>{{ .Section.Title }}</h1>
-  {{ if .Section.Description }}<p class="lead">{{ .Section.Description }}</p>{{ end }}
-  <div class="prose">{{ safeHTML .Section.BodyHTML }}</div>
-</article>
+<div class="docs-layout docs-layout-home">
+  <aside class="side-nav" aria-label="Documentation navigation">
+    {{ template "docs-nav" . }}
+  </aside>
+  <article class="article-shell home-article">
+    <p class="section-label">Documentation</p>
+    <h1>{{ .Config.Title }}</h1>
+    <p class="lede">{{ .Config.Description }}</p>
+    <div class="prose">{{ safeHTML .Section.BodyHTML }}</div>
+
+    <div class="quick-actions">
+      <a class="button primary" href="{{ .BasePath }}/guide/getting-started/">Get started</a>
+      <a class="button secondary" href="{{ .BasePath }}/reference/cli/">CLI reference</a>
+    </div>
+
+    <section class="doc-card-grid" aria-label="Documentation sections">
+      <a class="doc-card" href="{{ .BasePath }}/guide/getting-started/">
+        <span>Guide</span>
+        <strong>Merge your first ROOT files</strong>
+        <small>Install radd, check ROOT, and run a safe merge.</small>
+      </a>
+      <a class="doc-card" href="{{ .BasePath }}/guide/merge-planning/">
+        <span>Planning</span>
+        <strong>Preview the merge topology</strong>
+        <small>Understand chunks, fan-in, commands, and policies.</small>
+      </a>
+      <a class="doc-card" href="{{ .BasePath }}/guide/validation-inspection-and-benchmarking/">
+        <span>Benchmarking</span>
+        <strong>Inspect, validate, and tune</strong>
+        <small>Use ROOT metadata and benchmark candidate settings.</small>
+      </a>
+      <a class="doc-card" href="{{ .BasePath }}/reference/cli/">
+        <span>Reference</span>
+        <strong>Look up exact commands</strong>
+        <small>Flags for plan, merge, validate, inspect, bench, and cache.</small>
+      </a>
+      <a class="doc-card" href="{{ .BasePath }}/reference/safety/">
+        <span>Safety</span>
+        <strong>Know what radd refuses</strong>
+        <small>Overwrite protection, duplicate inputs, and validation behavior.</small>
+      </a>
+      <a class="doc-card" href="{{ .BasePath }}/developer/testing-and-release/">
+        <span>Developer</span>
+        <strong>Test real ROOT workflows</strong>
+        <small>Run fake-command tests, live ROOT tests, and release checks.</small>
+      </a>
+    </section>
+  </article>
+</div>
 {{- end }}
