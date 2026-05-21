@@ -18,7 +18,7 @@ Download a release archive from the project's GitHub Releases page, then verify
 and install the binary:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MohamedElashri/radd/main/install.sh | sh
+curl -fsSL https://melashri.net/radd/install.sh | sh
 radd doctor
 ```
 
@@ -27,7 +27,7 @@ installs to `$HOME/.local/bin`. Override those choices with environment
 variables:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MohamedElashri/radd/main/install.sh | \
+curl -fsSL https://melashri.net/radd/install.sh | \
   RADD_VERSION=v0.1.0 RADD_INSTALL_DIR=/usr/local/bin sh
 ```
 

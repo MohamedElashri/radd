@@ -12,7 +12,7 @@ template = "page"
 The fastest path is the install script:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MohamedElashri/radd/main/install.sh | sh
+curl -fsSL https://melashri.net/radd/install.sh | sh
 radd doctor
 ```
 
@@ -21,14 +21,14 @@ By default, the script installs the latest release for your OS and CPU to `$HOME
 Override the release or install directory with environment variables:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MohamedElashri/radd/main/install.sh | \
+curl -fsSL https://melashri.net/radd/install.sh | \
   RADD_VERSION=v0.1.0 RADD_INSTALL_DIR=/usr/local/bin sh
 ```
 
 If you are installing from a fork or mirror, set `RADD_REPO`:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/owner/repo/main/install.sh | \
+curl -fsSL https://melashri.net/radd/install.sh | \
   RADD_REPO=owner/repo sh
 ```
 
