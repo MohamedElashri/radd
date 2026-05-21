@@ -60,7 +60,7 @@ The fake `root` command prints marker-delimited JSON for metadata-inspection tes
 
 ## CI
 
-GitHub Actions runs formatting, clippy, and tests on Linux and macOS with stable Rust.
+GitHub Actions CI runs formatting, clippy, and tests on Linux with stable Rust. The release workflow builds the Linux and macOS release artifacts.
 
 ## Release Workflow
 

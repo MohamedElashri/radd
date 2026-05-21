@@ -8,13 +8,8 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.os }} / Rust ${{ matrix.rust }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-        rust: ["stable"]
+    name: Linux / Rust stable
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -23,6 +18,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9 # sanad: ref=v1
         with:
+          toolchain: stable
           components: clippy, rustfmt
 
       - name: Cache cargo
