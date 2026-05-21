@@ -1,5 +1,6 @@
 /target/
 docs/public/
+data/
 
 # Phase planning and local agent notes are intentionally private.
 plan*
