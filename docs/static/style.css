@@ -409,105 +409,116 @@ h3 {
   min-width: max-content;
 }
 
-.z-c,
-.z-c1,
-.z-cm,
-.z-cs {
-  color: #6e7781;
+.prose .z-chroma .z-line {
+  display: block;
 }
 
-.z-k,
-.z-kc,
-.z-kd,
-.z-kn,
-.z-kp,
-.z-kr,
-.z-kt {
+.prose .z-chroma .z-c,
+.prose .z-chroma .z-c1,
+.prose .z-chroma .z-cm,
+.prose .z-chroma .z-cs {
+  color: #6e7781;
+  font-style: italic;
+}
+
+.prose .z-chroma .z-k,
+.prose .z-chroma .z-kc,
+.prose .z-chroma .z-kd,
+.prose .z-chroma .z-kn,
+.prose .z-chroma .z-kp,
+.prose .z-chroma .z-kr,
+.prose .z-chroma .z-kt {
   color: #cf222e;
 }
 
-.z-n,
-.z-na,
-.z-nb,
-.z-bp,
-.z-nx,
-.z-p {
+.prose .z-chroma .z-n,
+.prose .z-chroma .z-na,
+.prose .z-chroma .z-bp,
+.prose .z-chroma .z-nx {
   color: #24292f;
 }
 
-.z-nc,
-.z-nf,
-.z-fm {
+.prose .z-chroma .z-nb {
   color: #8250df;
 }
 
-.z-nd,
-.z-ne,
-.z-nn {
+.prose .z-chroma .z-p {
+  color: #57606a;
+}
+
+.prose .z-chroma .z-nc,
+.prose .z-chroma .z-nf,
+.prose .z-chroma .z-fm {
+  color: #8250df;
+}
+
+.prose .z-chroma .z-nd,
+.prose .z-chroma .z-ne,
+.prose .z-chroma .z-nn {
   color: #953800;
 }
 
-.z-s,
-.z-s1,
-.z-s2,
-.z-sa,
-.z-sb,
-.z-sc,
-.z-sd,
-.z-se,
-.z-sh,
-.z-si,
-.z-sr,
-.z-ss {
+.prose .z-chroma .z-s,
+.prose .z-chroma .z-s1,
+.prose .z-chroma .z-s2,
+.prose .z-chroma .z-sa,
+.prose .z-chroma .z-sb,
+.prose .z-chroma .z-sc,
+.prose .z-chroma .z-sd,
+.prose .z-chroma .z-se,
+.prose .z-chroma .z-sh,
+.prose .z-chroma .z-si,
+.prose .z-chroma .z-sr,
+.prose .z-chroma .z-ss {
   color: #0a3069;
 }
 
-.z-m,
-.z-mb,
-.z-mf,
-.z-mh,
-.z-mi,
-.z-il,
-.z-mo {
+.prose .z-chroma .z-m,
+.prose .z-chroma .z-mb,
+.prose .z-chroma .z-mf,
+.prose .z-chroma .z-mh,
+.prose .z-chroma .z-mi,
+.prose .z-chroma .z-il,
+.prose .z-chroma .z-mo {
   color: #0550ae;
 }
 
-.z-o,
-.z-ow {
+.prose .z-chroma .z-o,
+.prose .z-chroma .z-ow {
   color: #0550ae;
 }
 
-.z-nt {
+.prose .z-chroma .z-nt {
   color: #116329;
 }
 
-.z-nv,
-.z-vc,
-.z-vg,
-.z-vi,
-.z-vm {
+.prose .z-chroma .z-nv,
+.prose .z-chroma .z-vc,
+.prose .z-chroma .z-vg,
+.prose .z-chroma .z-vi,
+.prose .z-chroma .z-vm {
   color: #953800;
 }
 
-.z-gd {
+.prose .z-chroma .z-gd {
   background: #ffebe9;
   color: #82071e;
 }
 
-.z-gi {
+.prose .z-chroma .z-gi {
   background: #dafbe1;
   color: #116329;
 }
 
-.z-ge {
+.prose .z-chroma .z-ge {
   font-style: italic;
 }
 
-.z-gs {
+.prose .z-chroma .z-gs {
   font-weight: 700;
 }
 
-.z-err {
+.prose .z-chroma .z-err {
   color: #cf222e;
 }
 
