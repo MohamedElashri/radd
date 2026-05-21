@@ -60,6 +60,40 @@ fn version_subcommand_works() {
         .stdout(predicate::str::contains(env!("CARGO_PKG_VERSION")));
 }
 
+#[test]
+fn update_check_only_reports_target_update() {
+    let mut command = Command::cargo_bin("radd").expect("binary exists");
+
+    command
+        .args(["update", "--target", "v9.9.9", "--check-only"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("current version:"))
+        .stdout(predicate::str::contains("latest version: v9.9.9"))
+        .stdout(predicate::str::contains("update available:"));
+}
+
+#[test]
+fn update_decline_does_not_download() {
+    let temp = TempDir::new().expect("temp dir");
+    let install_path = temp.path().join("radd");
+
+    let mut command = Command::cargo_bin("radd").expect("binary exists");
+    command
+        .args([
+            "update",
+            "--target",
+            "v9.9.9",
+            "--install-path",
+            install_path.to_str().expect("utf-8 path"),
+        ])
+        .write_stdin("n\n")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Download and install v9.9.9"))
+        .stdout(predicate::str::contains("update cancelled"));
+}
+
 #[cfg(unix)]
 #[test]
 fn doctor_succeeds_with_fake_hadd() {

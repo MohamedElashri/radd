@@ -9,6 +9,7 @@ mod inspect;
 mod planner;
 mod staging;
 mod telemetry;
+mod update;
 mod validate;
 
 use std::process::ExitCode;

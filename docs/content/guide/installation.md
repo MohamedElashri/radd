@@ -65,6 +65,22 @@ radd doctor
 
 On macOS or arm64 Linux, use the matching archive name in the same commands. Release binaries are not a substitute for ROOT; `radd doctor` should still find a working `hadd`.
 
+## Update
+
+Check for a newer release without installing it:
+
+```bash
+radd update --check-only
+```
+
+Install the latest release:
+
+```bash
+radd update
+```
+
+The update command asks before downloading anything. It verifies the release checksum before replacing the current executable. Use `--yes` for non-interactive update jobs, `--target vX.Y.Z` for a specific release, or `--install-path PATH` when you need to replace a wrapper-managed binary path.
+
 ## Build from Source
 
 Install a recent stable Rust toolchain, then build from a checkout:

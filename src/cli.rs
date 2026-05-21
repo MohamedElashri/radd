@@ -11,7 +11,9 @@ use std::{
 use anyhow::{Context, Result, bail};
 use clap::{Args, CommandFactory, Parser, Subcommand};
 
-use crate::{bench, cache, executor, hadd, input, inspect, planner, staging, telemetry, validate};
+use crate::{
+    bench, cache, executor, hadd, input, inspect, planner, staging, telemetry, update, validate,
+};
 
 /// A safe Rust frontend for orchestrating ROOT hadd merges.
 #[derive(Debug, Parser)]
@@ -54,6 +56,9 @@ pub enum Commands {
     /// Check local radd, ROOT, and filesystem prerequisites.
     Doctor(DoctorArgs),
 
+    /// Check for and install a radd release update.
+    Update(UpdateArgs),
+
     /// Print the merge plan without running hadd.
     Plan(PlanArgs),
 
@@ -78,6 +83,29 @@ pub struct DoctorArgs {
     /// hadd executable name or path to check.
     #[arg(long, default_value = "hadd")]
     pub hadd: PathBuf,
+}
+
+#[derive(Debug, Args)]
+pub struct UpdateArgs {
+    /// GitHub repository to check, defaulting to `RADD_REPO` or `MohamedElashri/radd`.
+    #[arg(long)]
+    pub repo: Option<String>,
+
+    /// Release tag to install instead of resolving the latest release.
+    #[arg(long, value_name = "TAG")]
+    pub target: Option<String>,
+
+    /// Binary path to replace, defaulting to the currently running executable.
+    #[arg(long)]
+    pub install_path: Option<PathBuf>,
+
+    /// Print update availability without downloading or installing.
+    #[arg(long)]
+    pub check_only: bool,
+
+    /// Accept the update prompt.
+    #[arg(long)]
+    pub yes: bool,
 }
 
 #[derive(Debug, Args)]
@@ -369,6 +397,7 @@ fn run_command(command: Commands) -> Result<()> {
             Ok(())
         }
         Commands::Doctor(args) => run_doctor(&args),
+        Commands::Update(args) => run_update(&args),
         Commands::Plan(args) => run_plan(&args),
         Commands::Merge(args) => run_merge(&args),
         Commands::Validate(args) => run_validate(&args),
@@ -394,6 +423,20 @@ fn run_doctor(args: &DoctorArgs) -> Result<()> {
     } else {
         bail!("doctor checks failed")
     }
+}
+
+fn run_update(args: &UpdateArgs) -> Result<()> {
+    update::run(&update::UpdateOptions {
+        repo: args
+            .repo
+            .clone()
+            .or_else(|| env::var("RADD_REPO").ok())
+            .unwrap_or_else(|| update::DEFAULT_REPO.to_string()),
+        target: args.target.clone(),
+        install_path: args.install_path.clone(),
+        yes: args.yes,
+        check_only: args.check_only,
+    })
 }
 
 fn run_inspect(args: &InputListArgs) -> Result<()> {
@@ -1234,6 +1277,36 @@ mod tests {
                 assert_eq!(args.hadd.to_string_lossy(), "/tmp/fake-hadd");
             }
             other => panic!("expected doctor command, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn parses_update_command() {
+        let cli = Cli::parse_from([
+            "radd",
+            "update",
+            "--repo",
+            "owner/repo",
+            "--target",
+            "v9.9.9",
+            "--install-path",
+            "/tmp/radd",
+            "--check-only",
+            "--yes",
+        ]);
+
+        match cli.command {
+            Some(Commands::Update(args)) => {
+                assert_eq!(args.repo.as_deref(), Some("owner/repo"));
+                assert_eq!(args.target.as_deref(), Some("v9.9.9"));
+                assert_eq!(
+                    args.install_path.expect("install path").to_string_lossy(),
+                    "/tmp/radd"
+                );
+                assert!(args.check_only);
+                assert!(args.yes);
+            }
+            other => panic!("expected update command, got {other:?}"),
         }
     }
 

@@ -1,11 +1,10 @@
 # radd
-
-`radd` is a safe Rust command-line frontend for merging ROOT files with the
+**radd** is a safe Rust command-line frontend for merging ROOT files with the
 installed ROOT `hadd` executable. It resolves input manifests, builds a
 size-balanced staged merge plan, runs `hadd` with bounded concurrency, and can
 write reproducible logs for later auditing.
 
-`radd` does not replace ROOT. It does not parse ROOT files, merge ROOT objects
+**radd** does not replace ROOT. It does not parse ROOT files, merge ROOT objects
 itself, link against ROOT C++ libraries, or bundle ROOT. A working ROOT
 installation with `hadd` on `PATH` is required for real merges.
 
@@ -78,6 +77,16 @@ Before using either install path for real merges, check ROOT:
 hadd -h
 radd doctor
 ```
+
+To update an installed release, check first or run the interactive updater:
+
+```bash
+radd update --check-only
+radd update
+```
+
+`radd update` asks for confirmation before downloading the matching release
+archive, verifies its SHA-256 checksum, and replaces the current executable.
 
 Tagged releases are built by the GitHub Actions release workflow. Pushing a tag
 like `v0.1.0` runs the release checks, builds Linux and macOS binaries for amd64

@@ -5,7 +5,7 @@ weight = 10
 template = "page"
 +++
 
-`radd` exposes one binary with subcommands for checking the environment, planning merges, executing merges, validating outputs, inspecting inputs, benchmarking settings, and managing cache entries.
+`radd` exposes one binary with subcommands for checking the environment, updating the installed binary, planning merges, executing merges, validating outputs, inspecting inputs, benchmarking settings, and managing cache entries.
 
 ## Global Flags
 
@@ -33,6 +33,24 @@ Checks whether `hadd` can be found and invoked, whether `root-config` is availab
 Flags:
 
 - `--hadd PATH`: executable name or path to check
+
+## update
+
+```bash
+radd update
+radd update --check-only
+radd update --yes
+```
+
+Checks GitHub Releases for a newer `radd` release matching the current OS and CPU. When an update is available, `radd update` asks for confirmation before downloading the release archive, verifying its SHA-256 checksum, extracting it, and replacing the current executable.
+
+Flags:
+
+- `--check-only`: report whether an update is available without downloading it
+- `--yes`: accept the update prompt
+- `--target TAG`: install a specific release tag instead of resolving the latest release
+- `--repo owner/repo`: check a fork or mirror; defaults to `RADD_REPO` or `MohamedElashri/radd`
+- `--install-path PATH`: replace a specific binary path instead of the running executable
 
 ## plan
 
