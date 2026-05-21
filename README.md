@@ -88,11 +88,6 @@ radd update
 `radd update` asks for confirmation before downloading the matching release
 archive, verifies its SHA-256 checksum, and replaces the current executable.
 
-Tagged releases are built by the GitHub Actions release workflow. Pushing a tag
-like `v0.1.0` runs the release checks, builds Linux and macOS binaries for amd64
-and arm64, packages them as `.tar.gz` archives, writes SHA-256 checksum files,
-and publishes them on the GitHub release.
-
 ## Documentation
 
 Full user and developer documentation lives in `docs/`. It is a Nida site:
