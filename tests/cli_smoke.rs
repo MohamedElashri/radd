@@ -27,6 +27,39 @@ fn version_works() {
         .stdout(predicate::str::contains(env!("CARGO_PKG_VERSION")));
 }
 
+#[test]
+fn short_version_works() {
+    let mut command = Command::cargo_bin("radd").expect("binary exists");
+
+    command
+        .arg("-v")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(env!("CARGO_PKG_VERSION")));
+}
+
+#[test]
+fn conventional_short_version_works() {
+    let mut command = Command::cargo_bin("radd").expect("binary exists");
+
+    command
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(env!("CARGO_PKG_VERSION")));
+}
+
+#[test]
+fn version_subcommand_works() {
+    let mut command = Command::cargo_bin("radd").expect("binary exists");
+
+    command
+        .arg("version")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(env!("CARGO_PKG_VERSION")));
+}
+
 #[cfg(unix)]
 #[test]
 fn doctor_succeeds_with_fake_hadd() {

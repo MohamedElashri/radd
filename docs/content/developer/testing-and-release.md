@@ -62,14 +62,38 @@ The fake `root` command prints marker-delimited JSON for metadata-inspection tes
 
 GitHub Actions runs formatting, clippy, and tests on Linux and macOS with stable Rust.
 
-## Release Build
+## Release Workflow
 
-Build:
+The release workflow runs when a tag matching `v*` is pushed. It performs the release checks, builds optimized Linux and macOS binaries for amd64 and arm64, smoke-tests the version commands, packages archives with a short bundled README, writes SHA-256 checksum files, uploads the packages as workflow artifacts, and publishes them to the GitHub release for the tag.
+
+It can also be started manually with `workflow_dispatch`; manual runs build and upload artifacts but only tagged runs publish a GitHub release.
+
+Release artifacts are named:
+
+- `radd-vX.Y.Z-linux-amd64.tar.gz`
+- `radd-vX.Y.Z-linux-arm64.tar.gz`
+- `radd-vX.Y.Z-macos-amd64.tar.gz`
+- `radd-vX.Y.Z-macos-arm64.tar.gz`
+
+Each archive also has a matching `.sha256` file.
+
+Before tagging, verify the package version:
 
 ```bash
-cargo build --release
+radd --version
+radd -v
+radd -V
+radd version
+```
+
+## Release Build
+
+Build locally:
+
+```bash
+cargo build --locked --release
 ```
 
 The release profile uses thin LTO, one codegen unit, and symbol stripping.
 
-Release packages should ship the single `radd` binary and document that ROOT remains an external runtime dependency.
+Release packages ship the single `radd` binary and a small archive README. ROOT remains an external runtime dependency and is checked by `radd doctor`.

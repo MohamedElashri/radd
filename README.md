@@ -11,25 +11,74 @@ installation with `hadd` on `PATH` is required for real merges.
 
 ## Install
 
-Build from a checkout:
+Install ROOT separately first. `radd` ships as one binary, but real merges still
+need ROOT's `hadd` executable available on `PATH` or passed with `--hadd`.
+
+Download a release archive from the project's GitHub Releases page, then verify
+and install the binary:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MohamedElashri/radd/main/install.sh | sh
+radd doctor
+```
+
+By default, the installer downloads the latest release for your OS and CPU and
+installs to `$HOME/.local/bin`. Override those choices with environment
+variables:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MohamedElashri/radd/main/install.sh | \
+  RADD_VERSION=v0.1.0 RADD_INSTALL_DIR=/usr/local/bin sh
+```
+
+For manual installs, download the release archive and checksum for your
+platform:
+
+```bash
+shasum -a 256 -c radd-v0.1.0-linux-amd64.tar.gz.sha256
+tar -xzf radd-v0.1.0-linux-amd64.tar.gz
+install -d "$HOME/.local/bin"
+install -m 0755 radd-v0.1.0-linux-amd64/radd "$HOME/.local/bin/radd"
+radd --version
+radd doctor
+```
+
+Choose the archive that matches your platform:
+
+- `radd-vX.Y.Z-linux-amd64.tar.gz`
+- `radd-vX.Y.Z-linux-arm64.tar.gz`
+- `radd-vX.Y.Z-macos-amd64.tar.gz`
+- `radd-vX.Y.Z-macos-arm64.tar.gz`
+
+To build from source instead, install a recent stable Rust toolchain and run:
 
 ```bash
 cargo build --release
 target/release/radd --version
+target/release/radd -v
+target/release/radd -V
+target/release/radd version
 ```
 
 Put `target/release/radd` somewhere on your `PATH`.
 
-For source builds, install a recent stable Rust toolchain and make sure ROOT is
-available in your shell:
+Or install from the checkout into Cargo's bin directory:
+
+```bash
+cargo install --path .
+```
+
+Before using either install path for real merges, check ROOT:
 
 ```bash
 hadd -h
 radd doctor
 ```
 
-Release packages can ship the single `radd` binary. They should document that
-ROOT remains an external runtime dependency.
+Tagged releases are built by the GitHub Actions release workflow. Pushing a tag
+like `v0.1.0` runs the release checks, builds Linux and macOS binaries for amd64
+and arm64, packages them as `.tar.gz` archives, writes SHA-256 checksum files,
+and publishes them on the GitHub release.
 
 ## Documentation
 

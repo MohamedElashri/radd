@@ -9,10 +9,18 @@ template = "page"
 
 ## Global Flags
 
-- `-v`, `--verbose`: increase diagnostic output
+- `--verbose`: increase diagnostic output
 - `-q`, `--quiet`: reduce diagnostic output
 - `-h`, `--help`: print help
-- `-V`, `--version`: print version
+- `-v`, `-V`, `--version`: print version
+
+## version
+
+```bash
+radd version
+```
+
+Prints the `radd` package version. The same version is available through `radd --version`, `radd -v`, and `radd -V`.
 
 ## doctor
 

@@ -9,28 +9,48 @@ use std::{
 };
 
 use anyhow::{Context, Result, bail};
-use clap::{Args, Parser, Subcommand};
+use clap::{Args, CommandFactory, Parser, Subcommand};
 
 use crate::{bench, cache, executor, hadd, input, inspect, planner, staging, telemetry, validate};
 
 /// A safe Rust frontend for orchestrating ROOT hadd merges.
 #[derive(Debug, Parser)]
-#[command(author, version, about, long_about = None)]
+#[command(
+    author,
+    version,
+    about,
+    long_about = None,
+    disable_version_flag = true,
+    arg_required_else_help = true
+)]
 pub struct Cli {
     /// Increase diagnostic output.
-    #[arg(short, long, action = clap::ArgAction::Count, global = true)]
+    #[arg(long, action = clap::ArgAction::Count, global = true)]
     pub verbose: u8,
 
     /// Reduce diagnostic output.
     #[arg(short, long, global = true)]
     pub quiet: bool,
 
+    /// Print version.
+    #[arg(
+        short = 'v',
+        visible_short_alias = 'V',
+        long = "version",
+        action = clap::ArgAction::SetTrue,
+        global = true
+    )]
+    pub version: bool,
+
     #[command(subcommand)]
-    pub command: Commands,
+    pub command: Option<Commands>,
 }
 
 #[derive(Debug, Subcommand)]
 pub enum Commands {
+    /// Print radd version.
+    Version,
+
     /// Check local radd, ROOT, and filesystem prerequisites.
     Doctor(DoctorArgs),
 
@@ -327,7 +347,27 @@ pub fn run() -> Result<()> {
 }
 
 fn run_with(cli: Cli) -> Result<()> {
+    if cli.version {
+        run_version();
+        return Ok(());
+    }
+
     match cli.command {
+        None => {
+            Cli::command().print_help()?;
+            println!();
+            Ok(())
+        }
+        Some(command) => run_command(command),
+    }
+}
+
+fn run_command(command: Commands) -> Result<()> {
+    match command {
+        Commands::Version => {
+            run_version();
+            Ok(())
+        }
         Commands::Doctor(args) => run_doctor(&args),
         Commands::Plan(args) => run_plan(&args),
         Commands::Merge(args) => run_merge(&args),
@@ -339,6 +379,10 @@ fn run_with(cli: Cli) -> Result<()> {
             CacheCommand::Clean => run_cache_clean(),
         },
     }
+}
+
+fn run_version() {
+    println!("{} {}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
 }
 
 fn run_doctor(args: &DoctorArgs) -> Result<()> {
@@ -1187,7 +1231,9 @@ mod tests {
         let cli = Cli::parse_from(["radd", "doctor", "--hadd", "/tmp/fake-hadd"]);
 
         match cli.command {
-            Commands::Doctor(args) => assert_eq!(args.hadd.to_string_lossy(), "/tmp/fake-hadd"),
+            Some(Commands::Doctor(args)) => {
+                assert_eq!(args.hadd.to_string_lossy(), "/tmp/fake-hadd");
+            }
             other => panic!("expected doctor command, got {other:?}"),
         }
     }
@@ -1227,7 +1273,7 @@ mod tests {
         ]);
 
         match cli.command {
-            Commands::Plan(args) => {
+            Some(Commands::Plan(args)) => {
                 assert_eq!(args.output.to_string_lossy(), "out.root");
                 assert_eq!(args.inputs, ["a.root", "@inputs.txt"]);
                 assert_eq!(args.jobs, Some(4));
@@ -1257,7 +1303,7 @@ mod tests {
         let cli = Cli::parse_from(["radd", "cache", "list"]);
 
         match cli.command {
-            Commands::Cache(args) => match args.command {
+            Some(Commands::Cache(args)) => match args.command {
                 CacheCommand::List => {}
                 other @ CacheCommand::Clean => {
                     panic!("expected cache list command, got {other:?}");
@@ -1272,7 +1318,9 @@ mod tests {
         let cli = Cli::parse_from(["radd", "validate", "out.root"]);
 
         match cli.command {
-            Commands::Validate(args) => assert_eq!(args.output.to_string_lossy(), "out.root"),
+            Some(Commands::Validate(args)) => {
+                assert_eq!(args.output.to_string_lossy(), "out.root");
+            }
             other => panic!("expected validate command, got {other:?}"),
         }
     }
@@ -1289,7 +1337,7 @@ mod tests {
         ]);
 
         match cli.command {
-            Commands::Inspect(args) => {
+            Some(Commands::Inspect(args)) => {
                 assert_eq!(args.inputs, ["a.root"]);
                 assert!(args.root_metadata);
                 assert_eq!(args.root.to_string_lossy(), "/opt/root/bin/root");
@@ -1339,7 +1387,7 @@ mod tests {
         ]);
 
         match cli.command {
-            Commands::Merge(args) => {
+            Some(Commands::Merge(args)) => {
                 assert_eq!(args.output.to_string_lossy(), "out.root");
                 assert_eq!(args.inputs, ["a.root"]);
                 assert_eq!(args.jobs, Some(3));

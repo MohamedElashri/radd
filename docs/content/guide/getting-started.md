@@ -1,6 +1,6 @@
 +++
 title = "Getting Started"
-description = "Build radd, check ROOT hadd, and run a first merge."
+description = "Check ROOT hadd and run a first merge."
 weight = 10
 template = "page"
 +++
@@ -11,26 +11,23 @@ template = "page"
 
 You need:
 
-- a recent stable Rust toolchain for source builds
+- `radd` installed from a release archive or source checkout
 - ROOT installed separately
 - `hadd` available on `PATH`, or a path supplied with `--hadd`
 
-Check the ROOT side first:
+See [Installation](../installation/) for release archives and source builds.
+
+Check the installed `radd` binary:
+
+```bash
+radd --version
+```
+
+Check the ROOT side:
 
 ```bash
 hadd -h
 ```
-
-## Build from Source
-
-From a checkout:
-
-```bash
-cargo build --release
-target/release/radd --version
-```
-
-Put `target/release/radd` somewhere on your `PATH`.
 
 ## Check the Environment
 
