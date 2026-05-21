@@ -11,15 +11,20 @@
     <div class="prose">{{ safeHTML .Section.BodyHTML }}</div>
 
     <div class="quick-actions">
-      <a class="button primary" href="{{ .BasePath }}/guide/getting-started/">Get started</a>
+      <a class="button primary" href="{{ .BasePath }}/guide/installation/">Install radd</a>
       <a class="button secondary" href="{{ .BasePath }}/reference/cli/">CLI reference</a>
     </div>
 
     <section class="doc-card-grid" aria-label="Documentation sections">
+      <a class="doc-card" href="{{ .BasePath }}/guide/installation/">
+        <span>Install</span>
+        <strong>Get radd on your PATH</strong>
+        <small>Use the install script, a release archive, or a source build.</small>
+      </a>
       <a class="doc-card" href="{{ .BasePath }}/guide/getting-started/">
         <span>Guide</span>
         <strong>Merge your first ROOT files</strong>
-        <small>Install radd, check ROOT, and run a safe merge.</small>
+        <small>Check ROOT and run a safe merge.</small>
       </a>
       <a class="doc-card" href="{{ .BasePath }}/guide/merge-planning/">
         <span>Planning</span>

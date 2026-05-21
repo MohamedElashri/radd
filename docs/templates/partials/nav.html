@@ -3,6 +3,7 @@
 <summary>Docs menu</summary>
 <nav>
   <p>Guide</p>
+  <a{{ if eq .CurrentURL "/guide/installation/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/installation/">Installation</a>
   <a{{ if eq .CurrentURL "/guide/getting-started/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/getting-started/">Getting Started</a>
   <a{{ if eq .CurrentURL "/guide/manifests-and-inputs/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/manifests-and-inputs/">Manifests and Inputs</a>
   <a{{ if eq .CurrentURL "/guide/merge-planning/" }} class="active"{{ end }} href="{{ .BasePath }}/guide/merge-planning/">Planning and Merging</a>
